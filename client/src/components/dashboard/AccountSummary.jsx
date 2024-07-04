@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const AccountSummary = () => {
+const AccountSummary = ({accounts}) => {
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+  useEffect(() => {
+      let income = 0;
+      let expenses = 0;
+
+      accounts?.forEach((account) => {
+        account.transactions?.forEach((transaction) => {
+          if (transaction.transactionType === "Income") {
+            income += transaction.amount;
+          } else if (transaction.transactionType === "Expenses") {
+            expenses += transaction.amount;
+          }
+        });
+      });
+
+      setTotalIncome(income);
+      setTotalExpenses(expenses);
+      setTotalBalance(income - expenses);
+  }, [accounts]);
   return (
     <>
       <div className="max-w-4xl mx-auto mb-12 text-center">
@@ -43,7 +64,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      $4,540
+                      ${totalIncome}
                     </h2>
                   </div>
                   <div className="w-auto p-1">
@@ -60,7 +81,6 @@ const AccountSummary = () => {
                           fill="#22C55E"
                         />
                       </svg>
-                      <p>23%</p>
                     </div>
                   </div>
                 </div>
@@ -94,7 +114,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      14
+                      ${totalExpenses}
                     </h2>
                   </div>
                   <div className="w-auto p-1">
@@ -111,7 +131,6 @@ const AccountSummary = () => {
                           fill="#22C55E"
                         />
                       </svg>
-                      <p>8%</p>
                     </div>
                   </div>
                 </div>
@@ -145,7 +164,7 @@ const AccountSummary = () => {
                 <div className="flex flex-wrap items-center justify-between -m-1">
                   <div className="w-auto p-1">
                     <h2 className="font-medium text-3xl text-black tracking-tighter">
-                      $91.42
+                      ${totalBalance}
                     </h2>
                   </div>
                   <div className="w-auto p-1">
