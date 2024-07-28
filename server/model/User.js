@@ -24,7 +24,11 @@ const userSchema = new mongoose.Schema({
         accounts: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Account",
-        }]
+        }],
+        imageUrl: {
+            type: String,
+            required: false,
+        }
     },
     {
         timestamps: true,
