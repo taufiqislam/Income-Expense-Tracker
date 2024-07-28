@@ -10,6 +10,7 @@ import AccountDashboard from './components/dashboard/AccountDashboard';
 import AccountDetails from './components/dashboard/AccountDetails';
 import AddAccount from './components/forms/AddAccount';
 import EditTransaction from './components/forms/EditTransaction';
+import UserProfile from './components/profile/UserProfile';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/dashboard" element={<AccountDashboard/>}/>
         <Route path="/account-details/:accountID" element={<AccountDetails/>}/>
         <Route path="/dashboard/accounts/create" element={<AddAccount/>}/>
+        <Route path="/profile" element={<UserProfile/>}/>
       </Routes>
     </BrowserRouter>
   );
