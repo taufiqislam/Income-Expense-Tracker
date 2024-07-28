@@ -125,10 +125,29 @@ const updateUserCtrl = async(req,res,next) => {
     }
 };
 
+const uploadImageCtrl = async(req,res,next) => {
+    try {
+
+        const user = await User.findByIdAndUpdate(req.body.user, {imageUrl: req.file.filename},{
+            new: true,
+            runValidators: true,
+        });
+        res.status(200).json({
+            status : "success",
+            data: user,
+        });
+    } catch (error) {
+        next(appErr(error.message, 500));
+    }
+};
+
+
+
 module.exports = {
     registerUserCtrl,
     loginUserCtrl,
     userProfileCtrl,
     deleteUserCtrl,
     updateUserCtrl,
+    uploadImageCtrl,
 };
