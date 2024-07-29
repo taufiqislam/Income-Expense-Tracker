@@ -13,7 +13,7 @@ usersRoute.get("/profile", isLogin, userProfileCtrl);
 
 usersRoute.delete("/", isLogin, deleteUserCtrl);
 
-usersRoute.put("/", isLogin, updateUserCtrl);
+usersRoute.put("/", updateUserCtrl);
 
 usersRoute.put('/upload',upload.single('file'), uploadImageCtrl);
 

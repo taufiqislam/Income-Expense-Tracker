@@ -91,16 +91,22 @@ const deleteUserCtrl = async(req,res,next) => {
 
 const updateUserCtrl = async(req,res,next) => {
     try {
+        console.log(req.body);
         if(req.body.email){
             const userFound = await User.findOne({email: req.body.email});
+            console.log(userFound);
             if(userFound) return next(appErr("Email is taken or you already have this email", 400));
         }
         
 
-        if(req.body.password) {
+        if(req.body.newPassword) {
+            const userFound = await User.findById(req.body.userId);
+            console.log(userFound);
+            const isPasswordMatch = await bcrypt.compare(req.body.currentPassword,userFound.password);
+            if(!isPasswordMatch) return next(appErr("Existing password didn't Match", 400));
             const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(req.body.password,salt);
-            const user = await User.findByIdAndUpdate(req.user, {
+            const hashedPassword = await bcrypt.hash(req.body.newPassword,salt);
+            const user = await User.findByIdAndUpdate(req.body.userId, {
                 password: hashedPassword,
             },{
                 new: true,
